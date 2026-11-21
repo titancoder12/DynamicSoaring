@@ -1,0 +1,39 @@
+{
+  "blender": "4.3.2",
+  "unit_system": "metric",
+  "metres_per_blender_unit": 1,
+  "stl_import_scale": 0.001,
+  "checks": {
+    "Panel A - print 1 of 2": {
+      "dimensions_mm": [
+        120.00000476837158,
+        14.553558081388474,
+        40.00000283122063
+      ],
+      "max_error_mm": 4.76837158203125e-06,
+      "scale_check": "pass"
+    },
+    "Panel B - print 2 of 2": {
+      "dimensions_mm": [
+        120.00000476837158,
+        14.553558081388474,
+        40.00000283122063
+      ],
+      "max_error_mm": 4.76837158203125e-06,
+      "scale_check": "pass"
+    },
+    "Alignment pin - print 1": {
+      "dimensions_mm": [
+        3.000000026077032,
+        2.9994072392582893,
+        12.000000104308128
+      ],
+      "max_error_mm": 0.0005927607417106628,
+      "scale_check": "pass"
+    }
+  },
+  "assembly_gap_mm": 18,
+  "reference_spar": "illustration only; not exported as print part",
+  "saved_blend": "design/blender/wing-section-v001.blend",
+  "render": "design/previews/wing-section-v001-assembly.png"
+}

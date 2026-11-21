@@ -1,0 +1,132 @@
+{
+  "revision": "wing-section-v001",
+  "evidence_type": "executed geometry checks and calculated estimates",
+  "software": {
+    "python": "3.12.14",
+    "cadquery": "2.7.0",
+    "OCP": "7.8.1.1"
+  },
+  "units": "mm",
+  "parameters": {
+    "revision": "wing-section-v001",
+    "units": "mm",
+    "evidence_status": "assumed construction dimensions; not measured hardware",
+    "chord_mm": 120.0,
+    "section_span_mm": 40.0,
+    "thickness_ratio": 0.12,
+    "trailing_edge_mm": 0.8,
+    "shell_mm": 0.8,
+    "web_mm": 1.2,
+    "sleeve_wall_mm": 1.2,
+    "spar_x_fraction": 0.3,
+    "spar_nominal_od_mm": 6.0,
+    "spar_diametral_clearance_mm": 0.4,
+    "alignment_x_fraction": 0.625,
+    "pin_od_mm": 3.0,
+    "pin_length_mm": 12.0,
+    "pin_chamfer_mm": 0.3,
+    "pin_diametral_clearance_mm": 0.4,
+    "profile_intervals_per_side": 80,
+    "stl_linear_tolerance_mm": 0.02,
+    "stl_angular_tolerance_rad": 0.08,
+    "assumed_solid_pla_density_g_cm3": 1.24
+  },
+  "source_sha256": {
+    "wing-section-v001/generate.py": "77dfe92ae2ff2e303a69ed339459559bae879d04337afb9af70a9d879679f2cb",
+    "parameters.json": "446992c6304f6a66d34caadbd96b912ec6b87bd8b9a760c1cca035dd50b2460e"
+  },
+  "checks": {
+    "minimum_shell_offset_mm": 0.7999999999999964,
+    "interfaces": {
+      "spar": {
+        "x_mm": 36.0,
+        "bore_diameter_mm": 6.4,
+        "diametral_clearance_mm": 0.40000000000000036,
+        "radial_clearance_mm": 0.20000000000000018,
+        "nominal_gauge_collision_mm3": 0.0
+      },
+      "alignment": {
+        "x_mm": 75.0,
+        "bore_diameter_mm": 3.4,
+        "diametral_clearance_mm": 0.3999999999999999,
+        "radial_clearance_mm": 0.19999999999999996,
+        "nominal_gauge_collision_mm3": 0.0
+      }
+    },
+    "assembled_span_mm": 80.0,
+    "pin_engagement_each_side_mm": 6.0,
+    "assembly_interference_check": "pass",
+    "print_axis": "+Z span; flat open end at Z=0"
+  },
+  "parts": {
+    "panel": {
+      "valid_solid": true,
+      "solid_count": 1,
+      "dimensions_mm": [
+        120.0,
+        14.553557089018957,
+        40.0
+      ],
+      "volume_mm3": 9944.602830269643,
+      "calculated_solid_pla_mass_g": 12.331307509534357,
+      "stl": {
+        "triangles": 3684,
+        "vertices": 1834,
+        "connected_components": 1,
+        "all_edges_two_faces": true,
+        "consistent_winding": true,
+        "dimensions_mm": [
+          120.0,
+          14.553557395935059,
+          40.0
+        ],
+        "volume_mm3": 9944.211449683055,
+        "relative_volume_error": 3.9356080204364154e-05
+      },
+      "step_roundtrip": "pass",
+      "sha256": {
+        "panel.stl": "a1ccc1ac876b2a185bddc75019f9ec018397bd76e028565f3232b1290ef10b42",
+        "panel.step": "5ebd7a9b6a654d8525a8fec6254d0c671526a594eb4f03fb063d98b4ee714ce8"
+      },
+      "print_quantity": 2
+    },
+    "alignment-pin": {
+      "valid_solid": true,
+      "solid_count": 1,
+      "dimensions_mm": [
+        3.0,
+        3.0,
+        12.0
+      ],
+      "volume_mm3": 84.03132029821975,
+      "calculated_solid_pla_mass_g": 0.10419883716979249,
+      "stl": {
+        "triangles": 1892,
+        "vertices": 948,
+        "connected_components": 1,
+        "all_edges_two_faces": true,
+        "consistent_winding": true,
+        "dimensions_mm": [
+          3.0,
+          2.9994070529937744,
+          12.0
+        ],
+        "volume_mm3": 84.0076648137575,
+        "relative_volume_error": 0.00028150794701668324
+      },
+      "step_roundtrip": "pass",
+      "sha256": {
+        "alignment-pin.stl": "ec167fcbf0aca84150af0e53691d9720da149b8eda67946f53d7b9aaed1f228f",
+        "alignment-pin.step": "a58d7faa6e5c97e5e2f765b959b349e5d64fce35d64b4a7f1840c0be96269747"
+      },
+      "print_quantity": 1
+    }
+  },
+  "pending": [
+    "slicer scale and toolpaths",
+    "physical print",
+    "measured material density/mass/fit",
+    "structural load characterization",
+    "aerodynamics and flight"
+  ]
+}

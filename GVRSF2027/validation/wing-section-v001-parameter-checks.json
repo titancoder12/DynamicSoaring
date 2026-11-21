@@ -1,0 +1,36 @@
+[
+  {
+    "case": "140 mm chord / 30 mm span / 5 mm spar / 1 mm shell",
+    "result": "pass",
+    "dimensions_mm": [
+      140.0,
+      16.999727156109948,
+      30.0
+    ]
+  },
+  {
+    "case": "oversized spar",
+    "result": "rejected as expected",
+    "message": "spar sleeve does not fit inside shell cavity"
+  },
+  {
+    "case": "negative clearance",
+    "result": "rejected as expected",
+    "message": "pin_diametral_clearance_mm must be positive and finite"
+  },
+  {
+    "case": "unsupported units",
+    "result": "rejected as expected",
+    "message": "Only millimetres are supported"
+  },
+  {
+    "case": "swapped bore stations",
+    "result": "rejected as expected",
+    "message": "Bore order/location invalid"
+  },
+  {
+    "case": "excessive pin chamfer",
+    "result": "rejected as expected",
+    "message": "Pin chamfer too large"
+  }
+]

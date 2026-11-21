@@ -1,0 +1,11 @@
+.DS_Store
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+*.blend1
+*.blend2
+*.tmp
+cache/
+tmp/

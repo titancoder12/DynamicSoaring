@@ -1,0 +1,5 @@
+*.stl binary
+*.blend binary
+*.png binary
+*.step -diff
+*.svg -diff

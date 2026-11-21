@@ -1,0 +1,28 @@
+{
+  "name": "EXP-XXX short description",
+  "simulation": {
+    "aircraft": "SGS",
+    "aircraft_dir": null,
+    "rate_hz": 120,
+    "duration_s": 60,
+    "log_every_steps": 12,
+    "min_height_m": 5,
+    "start": {
+      "height_m": 200,
+      "airspeed_mps": 27,
+      "heading_deg": 0,
+      "flight_path_deg": -2
+    },
+    "controller": {
+      "type": "glide",
+      "target_airspeed": 27,
+      "bank_deg": 0
+    }
+  },
+  "cases": [
+    {
+      "name": "still_air",
+      "wind": {"type": "still"}
+    }
+  ]
+}
