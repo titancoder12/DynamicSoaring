@@ -1,0 +1,2 @@
+case,duration_s,height_start_m,height_end_m,airspeed_end_mps,rate_air_Wkg,rate_ground_Wkg,frame_gap_swing_Jkg,note
+still_air,60.0,200.0,139.5,27.86,-9.497,-9.497,0.0,finished
