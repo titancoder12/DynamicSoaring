@@ -19,6 +19,7 @@ experiments/
     energy.py          ground-relative and air-relative specific energy
     controllers.py     the default glide controller + a template for yours
     output.py          CSV, summary tables, plots
+    visualization.py  offline Plotly flight paths and time series
     units.py           feet <-> metres, g
   aircraft/            your own glider models later (see aircraft/README.md)
   _template/           copy this to start a new experiment
@@ -79,6 +80,41 @@ everything in `EXP-001-sanity-checks/outputs/<date>_<time>/`:
 | `<case>.csv` | time series, one row every 0.1 s |
 | `summary.csv`, `summary.md` | one line per case |
 | `energy.png` | both energies vs time, all cases |
+| `flight_visualization.html` | interactive 3D flight paths and time series |
+
+### Open the interactive visualization
+
+The runner automatically saves the HTML alongside the CSVs, summaries, and
+`energy.png`, and prints its full path. Runs started in the same second get
+distinct IDs. Open the HTML file in a browser. It includes Plotly and the data
+needed to work offline.
+
+On macOS, from `GVRSF2027/experiments/`, replace `<run-id>` with the folder
+name printed by the runner and open the file:
+
+```bash
+open "EXP-001-sanity-checks/outputs/<run-id>/flight_visualization.html"
+```
+
+- **3D trajectory (m).** East and North show displacement from each case's
+  starting point, reconstructed by integrating the logged ground velocities
+  over the sample timestamps. Altitude comes from `h`, the logged height above
+  ground. The path is reconstructed after the run from the logged samples.
+  The display scales each axis independently to keep shallow glides visible.
+  Use the 3D camera controls to rotate, zoom, or pan. Hover for time, altitude,
+  airspeed, and both specific energies. The open circle marks the start and
+  the diamond marks the end.
+- **Air-relative and ground-relative specific energy (J/kg).** The separate
+  time series show the logged energy per unit mass in each reference frame.
+  Treat transient changes and differences between frames as diagnostic
+  observations. Evidence of sustained dynamic soaring requires evaluating
+  energy over a complete cycle.
+- **Altitude (m) and airspeed (m/s).** These time series show the logged height
+  above ground and the glider's speed relative to the surrounding air.
+
+Click a case in the legend to show or hide it across all five graphs. Use
+`--case <name>` to include a single case or `--no-plot` to save the CSVs and
+summaries without generating either `energy.png` or the interactive HTML.
 
 **Outputs are committed to Git on purpose.** Every run stays on record with
 its config, so you (and the judges) can trace any number back to the run that

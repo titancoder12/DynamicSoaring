@@ -11,6 +11,7 @@ Results go to  <experiment>/outputs/<date-time>/ :
     summary.csv        one line per case
     summary.md         the same table in Markdown
     energy.png         plot of both energies (if matplotlib is installed)
+    flight_visualization.html   standalone interactive plots
 """
 
 import argparse
@@ -18,6 +19,7 @@ import datetime
 import json
 import shutil
 import sys
+from itertools import count
 from pathlib import Path
 
 from . import simulation  # noqa: F401  (sets JSBSIM_DEBUG before jsbsim loads)
@@ -30,11 +32,25 @@ from .output import (write_csv, summarize, write_summary, write_summary_md,
 EXPERIMENTS_ROOT = Path(__file__).resolve().parent.parent
 
 
+def _reserve_run_dir(exp_dir):
+    """Create a fresh results directory, even for runs in the same second."""
+    stamp = datetime.datetime.now().strftime("%Y-%m-%d_%H%M%S")
+    for attempt in count():
+        run_id = f"{stamp}-{attempt:02d}" if attempt else stamp
+        results_dir = exp_dir / "outputs" / run_id
+        try:
+            results_dir.mkdir(parents=True)
+        except FileExistsError:
+            continue
+        return results_dir
+
+
 def run_experiment(exp_dir, only_case=None, plot=True, out_dir=None, quiet=False):
     """Run an experiment folder. Returns (summaries, results, out_dir)."""
     exp_dir = Path(exp_dir)
     if not exp_dir.is_absolute() and not exp_dir.exists():
         exp_dir = EXPERIMENTS_ROOT / exp_dir
+    exp_dir = exp_dir.resolve()
     config_path = exp_dir / "config.json"
     if not config_path.exists():
         raise FileNotFoundError(f"No config.json in {exp_dir}")
@@ -52,10 +68,12 @@ def run_experiment(exp_dir, only_case=None, plot=True, out_dir=None, quiet=False
             raise ValueError(f"No case named '{only_case}' in {config_path}")
 
     if out_dir is None:
-        stamp = datetime.datetime.now().strftime("%Y-%m-%d_%H%M%S")
-        out_dir = exp_dir / "outputs" / stamp
-    out_dir = Path(out_dir)
-    out_dir.mkdir(parents=True, exist_ok=True)
+        out_dir = _reserve_run_dir(exp_dir)
+    else:
+        out_dir = Path(out_dir).resolve()
+        out_dir.mkdir(parents=True, exist_ok=True)
+        if any(out_dir.iterdir()):
+            raise FileExistsError(f"Experiment output directory is not empty: {out_dir}")
     shutil.copy(config_path, out_dir / "config_used.json")
 
     if not quiet:
@@ -73,10 +91,15 @@ def run_experiment(exp_dir, only_case=None, plot=True, out_dir=None, quiet=False
     write_summary(out_dir / "summary.csv", summaries)
     write_summary_md(out_dir / "summary.md", config.get("name", exp_dir.name), summaries)
     if plot:
+        from .visualization import write_flight_visualization
+
         plot_cases(out_dir / "energy.png", results)
+        html_path = write_flight_visualization(out_dir, results, exp_dir.name)
     if not quiet:
         print_summary(summaries)
         print(f"\nSaved to {out_dir}")
+        if plot:
+            print(f"Plotly visualization: {html_path}")
     return summaries, results, out_dir
 
 
@@ -84,7 +107,7 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description="Run one soaring experiment folder.")
     parser.add_argument("experiment", help="experiment folder, e.g. EXP-001-sanity-checks")
     parser.add_argument("--case", help="run only the case with this name")
-    parser.add_argument("--no-plot", action="store_true", help="skip the plot")
+    parser.add_argument("--no-plot", action="store_true", help="skip both PNG and HTML plots")
     args = parser.parse_args(argv)
     run_experiment(args.experiment, args.case, plot=not args.no_plot)
 
